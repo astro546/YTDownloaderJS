@@ -41,7 +41,6 @@ h4 {
   width: 65.5rem;
   height: 4rem;
   margin: 0 auto;
-  /* border: 0.4rem solid black; */
   border-radius: 4rem;
   margin-top: 10rem;
   height: 4.4rem;
@@ -102,4 +101,9 @@ input:focus {
 #results {
   display: flex;
   flex-direction: column;
+  margin-top: 5rem;
+}
+
+.result {
+  display: flex;
 }
