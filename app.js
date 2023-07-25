@@ -15,6 +15,13 @@ document.addEventListener('DOMContentLoaded', () => {
   searchBtn.addEventListener('click', searchSong);
 });
 
+// window.addEventListener('unload', () => {
+//   console.log('refresh');
+//   setTimeout(() => {
+//     window.open('confirmation.html', '_blank');
+//   }, 2000);
+// });
+
 function displayEraseBtn(e) {
   if (e.target.value.length > 0) {
     eraseBtn.hidden = false;
@@ -71,9 +78,7 @@ function mostrarResultados(results) {
         <strong>Descripcion:</strong> ${description}
       </h5>
     </section>
-    <section class="video-buttons">
-      <button class="download-button">Descargar</button>
-    </section>
+    <button class="download-button">Descargar</button>
     `;
       resultsDiv.appendChild(divResult);
 
@@ -95,10 +100,11 @@ function mostrarResultados(results) {
           },
           body: JSON.stringify(videoInfo),
         })
-          .then((response) => response.json())
+          .then((response) => response.blob())
           .then((data) => {
             // Handle the response from the server (if needed)
-            console.log(data);
+            // console.log(data);
+            console.log('data: ', data);
           })
           .catch((error) => {
             // Handle errors

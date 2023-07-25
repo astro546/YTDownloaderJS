@@ -7,6 +7,7 @@ from flask_cors import CORS
 # import os
 # import mutagen
 # import requests
+import traceback
 
 special_chars = [" ", "'", ",", "."]
 
@@ -15,42 +16,22 @@ CORS(app)
 
 
 @app.route('/download', methods=['POST'])
-def get_data():
+def download():
     try:
         data = request.get_json()
-        download(data)
-        return jsonify({'message': 'Video URL received successfully.'})
+        videoURL = data.get('videoURL')
+        title = data.get('title')
+        artist = data.get('channelTitle')
+        img = data.get('img')
+        yt = YouTube(videoURL).streams.order_by('abr').desc().first()
+        video_file_type = yt.mime_type.replace("video/", "")
+        print(yt)
+        yt.download()
+        video_path = title + f".{video_file_type}"
+        return send_file(video_path, as_attachment=True)
     except Exception as e:
-        return jsonify({'error de python': str(e)}), 500
-
-
-def download(data):
-
-    videoURL = data.get('videoURL')
-    title = data.get('title')
-    artist = data.get('channelTitle')
-    img = data.get('img')
-    yt = YouTube(videoURL).streams.order_by('abr').desc().first()
-    video_file_type = yt.mime_type.replace("video/", "")
-    yt.download(filename=title)
-
-    # Convirtiendo el archivo descargado
-    temp_title = ""
-    for char in special_chars:
-        temp_title = title.replace(char, "-")
-
-    video_path = title + f".{video_file_type}"
-    audio_path = title + f".mp3"
-
-    video_file = VideoFileClip(video_path)
-    audio_file = video_file.audio
-    audio_file.write_audiofile(audio_path)
-    video_file.close()
-    audio_file.close()
-    os.remove(video_path)
-
-    return send_file(video_path, as_attachment=True)
-
+        traceback_info = traceback.format_exc()
+        return jsonify({'error de python': str(e), 'traceback':traceback_info})
 
 if __name__ == '__main__':
     app.run(port=5000)
