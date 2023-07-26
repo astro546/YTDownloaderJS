@@ -15,13 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
   searchBtn.addEventListener('click', searchSong);
 });
 
-// window.addEventListener('unload', () => {
-//   console.log('refresh');
-//   setTimeout(() => {
-//     window.open('confirmation.html', '_blank');
-//   }, 2000);
-// });
-
 function displayEraseBtn(e) {
   if (e.target.value.length > 0) {
     eraseBtn.hidden = false;
@@ -93,7 +86,7 @@ function mostrarResultados(results) {
           img: url,
         };
 
-        fetch('http://127.0.0.1:5000/download', {
+        fetch('http://127.0.0.1:8000/download', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -104,7 +97,20 @@ function mostrarResultados(results) {
           .then((data) => {
             // Handle the response from the server (if needed)
             // console.log(data);
-            console.log('data: ', data);
+            // console.log('data: ', data);
+            // Create a temporary link element
+            const downloadLink = document.createElement('a');
+            downloadLink.href = URL.createObjectURL(data);
+
+            // Set the download attribute and the file name
+            downloadLink.download = `${title}.${videoInfo.videoType}`;
+
+            // Append the link to the document and click it to trigger the download
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+
+            // Clean up: remove the link after download is triggered
+            document.body.removeChild(downloadLink);
           })
           .catch((error) => {
             // Handle errors
