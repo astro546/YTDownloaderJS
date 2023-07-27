@@ -1,3 +1,4 @@
+/* Configuracion Inicial */
 * {
   padding: 0;
   margin: 0;
@@ -29,6 +30,7 @@ input {
   font-family: 'Oswald', sans-serif;
 }
 
+/* Pagina Inicial */
 h4 {
   font-size: 3rem;
   height: fit-content;
@@ -98,28 +100,57 @@ input:focus {
   cursor: pointer;
 }
 
+/* Resultados */
 #results {
   display: flex;
   flex-direction: column;
   margin-top: 5rem;
 }
 
-.result {
-  display: flex;
-  width: 70%;
-  height: fit-content;
-  margin: 2rem auto;
+.result,
+.alert {
   border-radius: 2rem;
   box-shadow: 0rem 0rem 2.1rem -0.8rem rgba(0, 0, 0, 0.54);
 }
 
+.result {
+  display: flex;
+  height: fit-content;
+  width: 70%;
+  margin: 2rem auto;
+}
+
+.video-img {
+  transform: scale(0.8);
+  border-radius: 1.5rem;
+}
+
 .video-info {
-  margin-left: 10rem;
+  margin-left: 5rem;
   width: 68rem;
 }
 
 .video-title {
   text-align: start;
+  margin-top: 1rem;
+}
+
+.video-channel,
+.video-description,
+.download-text,
+#error-info {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 100;
+}
+
+.video-channel,
+.video-description {
+  font-size: 1.5rem;
+  padding-right: 5rem;
+}
+
+.video-channel {
+  margin-top: 2rem;
 }
 
 .download-button {
@@ -130,6 +161,110 @@ input:focus {
   background-color: red;
   border-radius: 1rem;
   margin-top: 1rem;
+  margin-left: 15rem;
   padding: 1rem;
   cursor: pointer;
+}
+
+/* Alerta de Descarga y Error */
+.alert {
+  width: 30%;
+  height: 18rem;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: repeat(2, 1fr);
+  padding-right: 2rem;
+}
+
+#video-img-alert {
+  grid-row: 1/3;
+}
+
+#video-title-alert {
+  grid-row: 1/2;
+  grid-column: 2/4;
+  display: inline-block;
+  font-size: 2rem;
+}
+
+.download-text {
+  align-self: start;
+  justify-self: end;
+  font-size: 1.8rem;
+  padding-right: 2rem;
+  margin-top: 1rem;
+}
+
+#complete-icon {
+  grid-row: 2/3;
+  grid-column: 3/4;
+  font-size: 4.8rem;
+  color: #ff3d00;
+}
+
+#back-button {
+  width: fit-content;
+  margin: 4rem auto;
+}
+
+/* Loader */
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+.loader::after {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 3px solid;
+  border-color: #ff3d00 transparent;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Alerta de error */
+#error-alert {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-right: 0;
+  width: 20%;
+}
+
+#error-title {
+  font-size: 4rem;
+  text-align: center;
+}
+
+#error-title ion-icon {
+  font-size: 3.8rem;
+  color: #ff3d00;
+}
+
+#error-info {
+  font-size: 2rem;
+}
+
+#error-btn {
+  margin: 2rem auto;
 }
